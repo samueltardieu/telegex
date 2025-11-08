@@ -505,6 +505,8 @@ if Mix.env() in [:dev, :test] do
       ~r/ (\S+) is returned/,
       ~r/of a (\S+) object.$/,
       ~r/Returns (\S+) on success/,
+      # Match "Returns a TYPE object" at the end of description before other patterns
+      ~r/Returns a (\S+) object\.$/,
       ~r/Returns the (\S+) of/,
       ~r/Returns.+as (\S+) object/,
       ~r/Returns.+as a (\S+) object/,

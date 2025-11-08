@@ -211,6 +211,10 @@ defmodule Telegex.TypeDefiner do
     true
   end
 
+  def attachment_description?(description) when is_binary(description) do
+    String.contains?(description, "attach://")
+  end
+
   def attachment_description?(_), do: false
 
   defmacro defunion(name, description, types, opts \\ []) do
