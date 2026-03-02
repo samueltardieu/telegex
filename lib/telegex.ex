@@ -157,7 +157,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -267,7 +267,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -307,6 +307,13 @@ defmodule Telegex do
       },
       %{
         description:
+          "Unique identifier of the message effect to be added to the message; only available when forwarding to private chats",
+        name: :message_effect_id,
+        required: false,
+        type: :string
+      },
+      %{
+        description:
           "A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only",
         name: :suggested_post_parameters,
         required: false,
@@ -335,7 +342,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -391,7 +398,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -472,6 +479,13 @@ defmodule Telegex do
       },
       %{
         description:
+          "Unique identifier of the message effect to be added to the message; only available when copying to private chats",
+        name: :message_effect_id,
+        required: false,
+        type: :string
+      },
+      %{
+        description:
           "A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.",
         name: :suggested_post_parameters,
         required: false,
@@ -515,7 +529,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -584,7 +598,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -718,7 +732,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -857,7 +871,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -996,7 +1010,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -1170,7 +1184,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -1322,7 +1336,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -1449,7 +1463,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -1572,7 +1586,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -1586,7 +1600,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "The number of Telegram Stars that must be paid to buy access to the media; 1-10000",
+          "The number of Telegram Stars that must be paid to buy access to the media; 1-25000",
         name: :star_count,
         required: true,
         type: :integer
@@ -1702,7 +1716,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -1788,7 +1802,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -1908,7 +1922,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -2028,7 +2042,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -2133,7 +2147,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -2365,7 +2379,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -2444,6 +2458,53 @@ defmodule Telegex do
   )
 
   defmethod(
+    "sendMessageDraft",
+    "Use this method to stream a partial message to a user while the message is being generated. Returns True on success.",
+    [
+      %{
+        description: "Unique identifier for the target private chat",
+        name: :chat_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description: "Unique identifier for the target message thread",
+        name: :message_thread_id,
+        required: false,
+        type: :integer
+      },
+      %{
+        description:
+          "Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated",
+        name: :draft_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description: "Text of the message to be sent, 1-4096 characters after entities parsing",
+        name: :text,
+        required: true,
+        type: :string
+      },
+      %{
+        description:
+          "Mode for parsing entities in the message text. See formatting options for more details.",
+        name: :parse_mode,
+        required: false,
+        type: :string
+      },
+      %{
+        description:
+          "A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode",
+        name: :entities,
+        required: false,
+        type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+      }
+    ],
+    :boolean
+  )
+
+  defmethod(
     "sendChatAction",
     "Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.",
     [
@@ -2462,7 +2523,8 @@ defmodule Telegex do
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
       },
       %{
-        description: "Unique identifier for the target message thread; for supergroups only",
+        description:
+          "Unique identifier for the target message thread or topic of a forum; for supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -2539,6 +2601,34 @@ defmodule Telegex do
       }
     ],
     Telegex.Type.UserProfilePhotos
+  )
+
+  defmethod(
+    "getUserProfileAudios",
+    "Use this method to get a list of profile audios for a user. Returns a UserProfileAudios object.",
+    [
+      %{
+        description: "Unique identifier of the target user",
+        name: :user_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description:
+          "Sequential number of the first audio to be returned. By default, all audios are returned.",
+        name: :offset,
+        required: false,
+        type: :integer
+      },
+      %{
+        description:
+          "Limits the number of audios to be retrieved. Values between 1-100 are accepted. Defaults to 100.",
+        name: :limit,
+        required: false,
+        type: :integer
+      }
+    ],
+    Telegex.Type.UserProfileAudios
   )
 
   defmethod(
@@ -2729,7 +2819,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True if the administrator can restrict, ban or unban chat members, or access supergroup statistics",
+          "Pass True if the administrator can restrict, ban or unban chat members, or access supergroup statistics. For backward compatibility, defaults to True for promotions of channel administrators",
         name: :can_restrict_members,
         required: false,
         type: :boolean
@@ -2806,6 +2896,13 @@ defmodule Telegex do
         name: :can_manage_direct_messages,
         required: false,
         type: :boolean
+      },
+      %{
+        description:
+          "Pass True if the administrator can edit the tags of regular members; for groups and supergroups only",
+        name: :can_manage_tags,
+        required: false,
+        type: :boolean
       }
     ],
     :boolean
@@ -2833,6 +2930,33 @@ defmodule Telegex do
           "New custom title for the administrator; 0-16 characters, emoji are not allowed",
         name: :custom_title,
         required: true,
+        type: :string
+      }
+    ],
+    :boolean
+  )
+
+  defmethod(
+    "setChatMemberTag",
+    "Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the can_manage_tags administrator right. Returns True on success.",
+    [
+      %{
+        description:
+          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+        name: :chat_id,
+        required: true,
+        type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
+      },
+      %{
+        description: "Unique identifier of the target user",
+        name: :user_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description: "New tag for the member; 0-16 characters, emoji are not allowed",
+        name: :tag,
+        required: false,
         type: :string
       }
     ],
@@ -3420,7 +3544,7 @@ defmodule Telegex do
 
   defmethod(
     "createForumTopic",
-    "Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.",
+    "Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator right. Returns information about the created topic as a ForumTopic object.",
     [
       %{
         description:
@@ -3450,7 +3574,7 @@ defmodule Telegex do
 
   defmethod(
     "editForumTopic",
-    "Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.",
+    "Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.",
     [
       %{
         description:
@@ -3527,7 +3651,7 @@ defmodule Telegex do
 
   defmethod(
     "deleteForumTopic",
-    "Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.",
+    "Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.",
     [
       %{
         description:
@@ -3548,7 +3672,7 @@ defmodule Telegex do
 
   defmethod(
     "unpinAllForumTopicMessages",
-    "Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.",
+    "Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.",
     [
       %{
         description:
@@ -3921,6 +4045,27 @@ defmodule Telegex do
   )
 
   defmethod(
+    "setMyProfilePhoto",
+    "Changes the profile photo of the bot. Returns True on success.",
+    [
+      %{
+        description: "The new profile photo to set",
+        name: :photo,
+        required: true,
+        type: Telegex.Type.InputProfilePhoto
+      }
+    ],
+    :boolean
+  )
+
+  defmethod(
+    "removeMyProfilePhoto",
+    "Removes the profile photo of the bot. Requires no parameters. Returns True on success.",
+    [],
+    :boolean
+  )
+
+  defmethod(
     "setChatMenuButton",
     "Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.",
     [
@@ -4019,7 +4164,12 @@ defmodule Telegex do
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
       },
-      %{description: "Identifier of the gift", name: :gift_id, required: true, type: :string},
+      %{
+        description: "Identifier of the gift; limited gifts can't be sent to channel chats",
+        name: :gift_id,
+        required: true,
+        type: :string
+      },
       %{
         description:
           "Pass True to pay for the gift upgrade from the bot's balance, thereby making the upgrade free for the receiver",
@@ -4428,8 +4578,91 @@ defmodule Telegex do
         type: :boolean
       },
       %{
-        description: "Pass True to exclude gifts that can be purchased a limited number of times",
-        name: :exclude_limited,
+        description:
+          "Pass True to exclude gifts that can be purchased a limited number of times and can be upgraded to unique",
+        name: :exclude_limited_upgradable,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that can be purchased a limited number of times and can't be upgraded to unique",
+        name: :exclude_limited_non_upgradable,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description: "Pass True to exclude unique gifts",
+        name: :exclude_unique,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that were assigned from the TON blockchain and can't be resold or transferred in Telegram",
+        name: :exclude_from_blockchain,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to sort results by gift price instead of send date. Sorting is applied before pagination.",
+        name: :sort_by_price,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Offset of the first entry to return as received from the previous request; use empty string to get the first chunk of results",
+        name: :offset,
+        required: false,
+        type: :string
+      },
+      %{
+        description: "The maximum number of gifts to be returned; 1-100. Defaults to 100",
+        name: :limit,
+        required: false,
+        type: :integer
+      }
+    ],
+    Telegex.Type.OwnedGifts
+  )
+
+  defmethod(
+    "getUserGifts",
+    "Returns the gifts owned and hosted by a user. Returns OwnedGifts on success.",
+    [
+      %{
+        description: "Unique identifier of the user",
+        name: :user_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that can be purchased an unlimited number of times",
+        name: :exclude_unlimited,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that can be purchased a limited number of times and can be upgraded to unique",
+        name: :exclude_limited_upgradable,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that can be purchased a limited number of times and can't be upgraded to unique",
+        name: :exclude_limited_non_upgradable,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that were assigned from the TON blockchain and can't be resold or transferred in Telegram",
+        name: :exclude_from_blockchain,
         required: false,
         type: :boolean
       },
@@ -4448,7 +4681,90 @@ defmodule Telegex do
       },
       %{
         description:
-          "Offset of the first entry to return as received from the previous request; use empty string to get the first chunk of results",
+          "Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results",
+        name: :offset,
+        required: false,
+        type: :string
+      },
+      %{
+        description: "The maximum number of gifts to be returned; 1-100. Defaults to 100",
+        name: :limit,
+        required: false,
+        type: :integer
+      }
+    ],
+    Telegex.Type.OwnedGifts
+  )
+
+  defmethod(
+    "getChatGifts",
+    "Returns the gifts owned by a chat. Returns OwnedGifts on success.",
+    [
+      %{
+        description:
+          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+        name: :chat_id,
+        required: true,
+        type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that aren't saved to the chat's profile page. Always True, unless the bot has the can_post_messages administrator right in the channel.",
+        name: :exclude_unsaved,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that are saved to the chat's profile page. Always False, unless the bot has the can_post_messages administrator right in the channel.",
+        name: :exclude_saved,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that can be purchased an unlimited number of times",
+        name: :exclude_unlimited,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that can be purchased a limited number of times and can be upgraded to unique",
+        name: :exclude_limited_upgradable,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that can be purchased a limited number of times and can't be upgraded to unique",
+        name: :exclude_limited_non_upgradable,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to exclude gifts that were assigned from the TON blockchain and can't be resold or transferred in Telegram",
+        name: :exclude_from_blockchain,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description: "Pass True to exclude unique gifts",
+        name: :exclude_unique,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to sort results by gift price instead of send date. Sorting is applied before pagination.",
+        name: :sort_by_price,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results",
         name: :offset,
         required: false,
         type: :string
@@ -4601,6 +4917,53 @@ defmodule Telegex do
         name: :areas,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.StoryArea}
+      },
+      %{
+        description: "Pass True to keep the story accessible after it expires",
+        name: :post_to_chat_page,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True if the content of the story must be protected from forwarding and screenshotting",
+        name: :protect_content,
+        required: false,
+        type: :boolean
+      }
+    ],
+    Telegex.Type.Story
+  )
+
+  defmethod(
+    "repostStory",
+    "Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the can_manage_stories business bot right for both business accounts. Returns Story on success.",
+    [
+      %{
+        description: "Unique identifier of the business connection",
+        name: :business_connection_id,
+        required: true,
+        type: :string
+      },
+      %{
+        description:
+          "Unique identifier of the chat which posted the story that should be reposted",
+        name: :from_chat_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description: "Unique identifier of the story that should be reposted",
+        name: :from_story_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description:
+          "Period after which the story is moved to the archive, in seconds; must be one of 6 * 3600, 12 * 3600, 86400, or 2 * 86400",
+        name: :active_period,
+        required: true,
+        type: :integer
       },
       %{
         description: "Pass True to keep the story accessible after it expires",
@@ -5230,7 +5593,7 @@ Returns True on success.",
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -5759,7 +6122,7 @@ No more than 50 results per query are allowed.",
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer
@@ -6267,7 +6630,7 @@ No more than 50 results per query are allowed.",
       },
       %{
         description:
-          "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
         name: :message_thread_id,
         required: false,
         type: :integer

@@ -736,6 +736,20 @@ At most one of the optional parameters can be present in any given update.", [
       name: :has_main_web_app,
       optional: true,
       type: :boolean
+    },
+    %{
+      description:
+        "Optional. True, if the bot has forum topic mode enabled in private chats. Returned only in getMe.",
+      name: :has_topics_enabled,
+      optional: true,
+      type: :boolean
+    },
+    %{
+      description:
+        "Optional. True, if the bot allows users to create and delete topics in private chats. Returned only in getMe.",
+      name: :allows_users_to_create_topics,
+      optional: true,
+      type: :boolean
     }
   ])
 
@@ -1102,6 +1116,33 @@ At most one of the optional parameters can be present in any given update.", [
       name: :location,
       optional: true,
       type: Telegex.Type.ChatLocation
+    },
+    %{
+      description: "Optional. For private chats, the rating of the user if any",
+      name: :rating,
+      optional: true,
+      type: Telegex.Type.UserRating
+    },
+    %{
+      description:
+        "Optional. For private chats, the first audio added to the profile of the user",
+      name: :first_profile_audio,
+      optional: true,
+      type: Telegex.Type.Audio
+    },
+    %{
+      description:
+        "Optional. The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews",
+      name: :unique_gift_colors,
+      optional: true,
+      type: Telegex.Type.UniqueGiftColors
+    },
+    %{
+      description:
+        "Optional. The number of Telegram Stars a general user have to pay to send a message to the chat",
+      name: :paid_message_star_count,
+      optional: true,
+      type: :integer
     }
   ])
 
@@ -1115,7 +1156,7 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
-        "Optional. Unique identifier of a message thread to which the message belongs; for supergroups only",
+        "Optional. Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only",
       name: :message_thread_id,
       optional: true,
       type: :integer
@@ -1157,6 +1198,13 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
+        "Optional. Tag or custom title of the sender of the message; for supergroups only",
+      name: :sender_tag,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
         "Date the message was sent in Unix time. It is always a positive number, representing a valid date.",
       name: :date,
       optional: false,
@@ -1182,7 +1230,8 @@ At most one of the optional parameters can be present in any given update.", [
       type: Telegex.Type.MessageOrigin
     },
     %{
-      description: "Optional. True, if the message is sent to a forum topic",
+      description:
+        "Optional. True, if the message is sent to a topic in a forum supergroup or a private chat with the bot",
       name: :is_topic_message,
       optional: true,
       type: :boolean
@@ -1261,7 +1310,7 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
-        "Optional. The unique identifier of a media message group this message belongs to",
+        "Optional. The unique identifier inside this chat of a media message group this message belongs to",
       name: :media_group_id,
       optional: true,
       type: :string
@@ -1458,6 +1507,18 @@ At most one of the optional parameters can be present in any given update.", [
       type: Telegex.Type.User
     },
     %{
+      description: "Optional. Service message: chat owner has left",
+      name: :chat_owner_left,
+      optional: true,
+      type: Telegex.Type.ChatOwnerLeft
+    },
+    %{
+      description: "Optional. Service message: chat owner has changed",
+      name: :chat_owner_changed,
+      optional: true,
+      type: Telegex.Type.ChatOwnerChanged
+    },
+    %{
       description: "Optional. A chat title was changed to this value",
       name: :new_chat_title,
       optional: true,
@@ -1566,6 +1627,13 @@ At most one of the optional parameters can be present in any given update.", [
       name: :unique_gift,
       optional: true,
       type: Telegex.Type.UniqueGiftInfo
+    },
+    %{
+      description:
+        "Optional. Service message: upgrade of a gift was purchased after the gift was sent",
+      name: :gift_upgrade_sent,
+      optional: true,
+      type: Telegex.Type.GiftInfo
     },
     %{
       description:
@@ -1804,7 +1872,7 @@ At most one of the optional parameters can be present in any given update.", [
     [
       %{
         description:
-          "Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag or #hashtag@chatusername), “cashtag” ($USD or $USD@chatusername), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers)",
+          "Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag or #hashtag@chatusername), “cashtag” ($USD or $USD@chatusername), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time)",
         name: :type,
         optional: false,
         type: :string
@@ -1844,6 +1912,19 @@ At most one of the optional parameters can be present in any given update.", [
         description:
           "Optional. For “custom_emoji” only, unique identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker",
         name: :custom_emoji_id,
+        optional: true,
+        type: :string
+      },
+      %{
+        description: "Optional. For “date_time” only, the Unix time associated with the entity",
+        name: :unix_time,
+        optional: true,
+        type: :integer
+      },
+      %{
+        description:
+          "Optional. For “date_time” only, the string that defines the formatting of the date and time. See date-time entity formatting for more details.",
+        name: :date_time_format,
         optional: true,
         type: :string
       }
@@ -2425,6 +2506,38 @@ At most one of the optional parameters can be present in any given update.", [
     }
   ])
 
+  deftype(VideoQuality, "This object represents a video file of a specific quality.", [
+    %{
+      description: "Identifier for this file, which can be used to download or reuse the file",
+      name: :file_id,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
+      name: :file_unique_id,
+      optional: false,
+      type: :string
+    },
+    %{description: "Video width", name: :width, optional: false, type: :integer},
+    %{description: "Video height", name: :height, optional: false, type: :integer},
+    %{
+      description:
+        "Codec that was used to encode the video, for example, “h264”, “h265”, or “av01”",
+      name: :codec,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.",
+      name: :file_size,
+      optional: true,
+      type: :integer
+    }
+  ])
+
   deftype(Video, "This object represents a video file.", [
     %{
       description: "Identifier for this file, which can be used to download or reuse the file",
@@ -2474,6 +2587,12 @@ At most one of the optional parameters can be present in any given update.", [
       name: :start_timestamp,
       optional: true,
       type: :integer
+    },
+    %{
+      description: "Optional. List of available qualities of the video",
+      name: :qualities,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.VideoQuality}
     },
     %{
       description: "Optional. Original filename as defined by the sender",
@@ -2849,10 +2968,18 @@ At most one of the optional parameters can be present in any given update.", [
       type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
     },
     %{
-      description: "Optional. User that completed the task; omitted if the task wasn't completed",
+      description:
+        "Optional. User that completed the task; omitted if the task wasn't completed by a user",
       name: :completed_by_user,
       optional: true,
       type: Telegex.Type.User
+    },
+    %{
+      description:
+        "Optional. Chat that completed the task; omitted if the task wasn't completed by a chat",
+      name: :completed_by_chat,
+      optional: true,
+      type: Telegex.Type.Chat
     },
     %{
       description:
@@ -3366,6 +3493,13 @@ At most one of the optional parameters can be present in any given update.", [
         name: :icon_custom_emoji_id,
         optional: true,
         type: :string
+      },
+      %{
+        description:
+          "Optional. True, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot",
+        name: :is_name_implicit,
+        optional: true,
+        type: :boolean
       }
     ]
   )
@@ -4069,6 +4203,21 @@ At most one of the optional parameters can be present in any given update.", [
     }
   ])
 
+  deftype(UserProfileAudios, "This object represents the audios displayed on a user's profile.", [
+    %{
+      description: "Total number of profile audios for the target user",
+      name: :total_count,
+      optional: false,
+      type: :integer
+    },
+    %{
+      description: "Requested profile audios",
+      name: :audios,
+      optional: false,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.Audio}
+    }
+  ])
+
   deftype(
     File,
     "This object represents a file ready to be downloaded. The file can be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile.",
@@ -4170,13 +4319,27 @@ At most one of the optional parameters can be present in any given update.", [
 
   deftype(
     KeyboardButton,
-    "This object represents one button of the reply keyboard. At most one of the optional fields must be used to specify type of the button. For simple text buttons, String can be used instead of this object to specify the button text.",
+    "This object represents one button of the reply keyboard. At most one of the fields other than text, icon_custom_emoji_id, and style must be used to specify the type of the button. For simple text buttons, String can be used instead of this object to specify the button text.",
     [
       %{
         description:
-          "Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed",
+          "Text of the button. If none of the fields other than text, icon_custom_emoji_id, and style are used, it will be sent as a message when the button is pressed",
         name: :text,
         optional: false,
+        type: :string
+      },
+      %{
+        description:
+          "Optional. Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on Fragment or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.",
+        name: :icon_custom_emoji_id,
+        optional: true,
+        type: :string
+      },
+      %{
+        description:
+          "Optional. Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.",
+        name: :style,
+        optional: true,
         type: :string
       },
       %{
@@ -4414,9 +4577,23 @@ At most one of the optional parameters can be present in any given update.", [
 
   deftype(
     InlineKeyboardButton,
-    "This object represents one button of an inline keyboard. Exactly one of the optional fields must be used to specify type of the button.",
+    "This object represents one button of an inline keyboard. Exactly one of the fields other than text, icon_custom_emoji_id, and style must be used to specify the type of the button.",
     [
       %{description: "Label text on the button", name: :text, optional: false, type: :string},
+      %{
+        description:
+          "Optional. Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on Fragment or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.",
+        name: :icon_custom_emoji_id,
+        optional: true,
+        type: :string
+      },
+      %{
+        description:
+          "Optional. Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.",
+        name: :style,
+        optional: true,
+        type: :string
+      },
       %{
         description:
           "Optional. HTTP or tg:// URL to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.",
@@ -4859,6 +5036,13 @@ At most one of the optional parameters can be present in any given update.", [
       name: :can_manage_direct_messages,
       optional: true,
       type: :boolean
+    },
+    %{
+      description:
+        "Optional. True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages.",
+      name: :can_manage_tags,
+      optional: true,
+      type: :boolean
     }
   ])
 
@@ -5075,6 +5259,13 @@ At most one of the optional parameters can be present in any given update.", [
         type: :boolean
       },
       %{
+        description:
+          "Optional. True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages.",
+        name: :can_manage_tags,
+        optional: true,
+        type: :boolean
+      },
+      %{
         description: "Optional. Custom title for this user",
         name: :custom_title,
         optional: true,
@@ -5093,6 +5284,7 @@ At most one of the optional parameters can be present in any given update.", [
         optional: false,
         type: :string
       },
+      %{description: "Optional. Tag of the member", name: :tag, optional: true, type: :string},
       %{
         description: "Information about the user",
         name: :user,
@@ -5118,6 +5310,7 @@ At most one of the optional parameters can be present in any given update.", [
         optional: false,
         type: :string
       },
+      %{description: "Optional. Tag of the member", name: :tag, optional: true, type: :string},
       %{
         description: "Information about the user",
         name: :user,
@@ -5189,6 +5382,12 @@ At most one of the optional parameters can be present in any given update.", [
       %{
         description: "True, if the user is allowed to add web page previews to their messages",
         name: :can_add_web_page_previews,
+        optional: false,
+        type: :boolean
+      },
+      %{
+        description: "True, if the user is allowed to edit their own tag",
+        name: :can_edit_tag,
         optional: false,
         type: :boolean
       },
@@ -5376,6 +5575,12 @@ At most one of the optional parameters can be present in any given update.", [
         type: :boolean
       },
       %{
+        description: "Optional. True, if the user is allowed to edit their own tag",
+        name: :can_edit_tag,
+        optional: true,
+        type: :boolean
+      },
+      %{
         description:
           "Optional. True, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups",
         name: :can_change_info,
@@ -5498,6 +5703,39 @@ At most one of the optional parameters can be present in any given update.", [
       }
     }
   ])
+
+  deftype(
+    UserRating,
+    "This object describes the rating of a user based on their Telegram Star spendings.",
+    [
+      %{
+        description:
+          "Current level of the user, indicating their reliability when purchasing digital goods and services. A higher level suggests a more trustworthy customer; a negative level is likely reason for concern.",
+        name: :level,
+        optional: false,
+        type: :integer
+      },
+      %{
+        description: "Numerical value of the user's rating; the higher the rating, the better",
+        name: :rating,
+        optional: false,
+        type: :integer
+      },
+      %{
+        description: "The rating value required to get the current level",
+        name: :current_level_rating,
+        optional: false,
+        type: :integer
+      },
+      %{
+        description:
+          "Optional. The rating value required to get to the next level; omitted if the maximum level was reached",
+        name: :next_level_rating,
+        optional: true,
+        type: :integer
+      }
+    ]
+  )
 
   deftype(StoryAreaPosition, "Describes the position of a clickable area within a story.", [
     %{
@@ -5877,6 +6115,34 @@ At most one of the optional parameters can be present in any given update.", [
       name: :icon_custom_emoji_id,
       optional: true,
       type: :string
+    },
+    %{
+      description:
+        "Optional. True, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot",
+      name: :is_name_implicit,
+      optional: true,
+      type: :boolean
+    }
+  ])
+
+  deftype(GiftBackground, "This object describes the background of a gift.", [
+    %{
+      description: "Center color of the background in RGB format",
+      name: :center_color,
+      optional: false,
+      type: :integer
+    },
+    %{
+      description: "Edge color of the background in RGB format",
+      name: :edge_color,
+      optional: false,
+      type: :integer
+    },
+    %{
+      description: "Text color of the background in RGB format",
+      name: :text_color,
+      optional: false,
+      type: :integer
     }
   ])
 
@@ -5903,15 +6169,56 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
-        "Optional. The total number of the gifts of this type that can be sent; for limited gifts only",
+        "Optional. True, if the gift can only be purchased by Telegram Premium subscribers",
+      name: :is_premium,
+      optional: true,
+      type: :boolean
+    },
+    %{
+      description:
+        "Optional. True, if the gift can be used (after being upgraded) to customize a user's appearance",
+      name: :has_colors,
+      optional: true,
+      type: :boolean
+    },
+    %{
+      description:
+        "Optional. The total number of gifts of this type that can be sent by all users; for limited gifts only",
       name: :total_count,
       optional: true,
       type: :integer
     },
     %{
       description:
-        "Optional. The number of remaining gifts of this type that can be sent; for limited gifts only",
+        "Optional. The number of remaining gifts of this type that can be sent by all users; for limited gifts only",
       name: :remaining_count,
+      optional: true,
+      type: :integer
+    },
+    %{
+      description:
+        "Optional. The total number of gifts of this type that can be sent by the bot; for limited gifts only",
+      name: :personal_total_count,
+      optional: true,
+      type: :integer
+    },
+    %{
+      description:
+        "Optional. The number of remaining gifts of this type that can be sent by the bot; for limited gifts only",
+      name: :personal_remaining_count,
+      optional: true,
+      type: :integer
+    },
+    %{
+      description: "Optional. Background of the gift",
+      name: :background,
+      optional: true,
+      type: Telegex.Type.GiftBackground
+    },
+    %{
+      description:
+        "Optional. The total number of different unique gifts that can be obtained by upgrading the gift",
+      name: :unique_gift_variant_count,
       optional: true,
       type: :integer
     },
@@ -5942,10 +6249,17 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
-        "The number of unique gifts that receive this model for every 1000 gifts upgraded",
+        "The number of unique gifts that receive this model for every 1000 gift upgrades. Always 0 for crafted gifts.",
       name: :rarity_per_mille,
       optional: false,
       type: :integer
+    },
+    %{
+      description:
+        "Optional. Rarity of the model if it is a crafted model. Currently, can be “uncommon”, “rare”, “epic”, or “legendary”.",
+      name: :rarity,
+      optional: true,
+      type: :string
     }
   ])
 
@@ -6019,9 +6333,58 @@ At most one of the optional parameters can be present in any given update.", [
   ])
 
   deftype(
+    UniqueGiftColors,
+    "This object contains information about the color scheme for a user's name, message replies and link previews based on a unique gift.",
+    [
+      %{
+        description: "Custom emoji identifier of the unique gift's model",
+        name: :model_custom_emoji_id,
+        optional: false,
+        type: :string
+      },
+      %{
+        description: "Custom emoji identifier of the unique gift's symbol",
+        name: :symbol_custom_emoji_id,
+        optional: false,
+        type: :string
+      },
+      %{
+        description: "Main color used in light themes; RGB format",
+        name: :light_theme_main_color,
+        optional: false,
+        type: :integer
+      },
+      %{
+        description: "List of 1-3 additional colors used in light themes; RGB format",
+        name: :light_theme_other_colors,
+        optional: false,
+        type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: :integer}
+      },
+      %{
+        description: "Main color used in dark themes; RGB format",
+        name: :dark_theme_main_color,
+        optional: false,
+        type: :integer
+      },
+      %{
+        description: "List of 1-3 additional colors used in dark themes; RGB format",
+        name: :dark_theme_other_colors,
+        optional: false,
+        type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: :integer}
+      }
+    ]
+  )
+
+  deftype(
     UniqueGift,
     "This object describes a unique gift that was upgraded from a regular gift.",
     [
+      %{
+        description: "Identifier of the regular gift from which the gift was upgraded",
+        name: :gift_id,
+        optional: false,
+        type: :string
+      },
       %{
         description:
           "Human-readable name of the regular gift from which this unique gift was upgraded",
@@ -6062,6 +6425,34 @@ At most one of the optional parameters can be present in any given update.", [
         type: Telegex.Type.UniqueGiftBackdrop
       },
       %{
+        description:
+          "Optional. True, if the original regular gift was exclusively purchaseable by Telegram Premium subscribers",
+        name: :is_premium,
+        optional: true,
+        type: :boolean
+      },
+      %{
+        description:
+          "Optional. True, if the gift was used to craft another gift and isn't available anymore",
+        name: :is_burned,
+        optional: true,
+        type: :boolean
+      },
+      %{
+        description:
+          "Optional. True, if the gift is assigned from the TON blockchain and can't be resold or transferred in Telegram",
+        name: :is_from_blockchain,
+        optional: true,
+        type: :boolean
+      },
+      %{
+        description:
+          "Optional. The color scheme that can be used by the gift's owner for the chat's name, replies to messages and link previews; for business account gifts and gifts that are currently on sale only",
+        name: :colors,
+        optional: true,
+        type: Telegex.Type.UniqueGiftColors
+      },
+      %{
         description: "Optional. Information about the chat that published the gift",
         name: :publisher_chat,
         optional: true,
@@ -6096,10 +6487,17 @@ At most one of the optional parameters can be present in any given update.", [
       },
       %{
         description:
-          "Optional. Number of Telegram Stars that were prepaid by the sender for the ability to upgrade the gift",
+          "Optional. Number of Telegram Stars that were prepaid for the ability to upgrade the gift",
         name: :prepaid_upgrade_star_count,
         optional: true,
         type: :integer
+      },
+      %{
+        description:
+          "Optional. True, if the gift's upgrade was purchased after the gift was sent",
+        name: :is_upgrade_separate,
+        optional: true,
+        type: :boolean
       },
       %{
         description: "Optional. True, if the gift can be upgraded to a unique gift",
@@ -6125,6 +6523,13 @@ At most one of the optional parameters can be present in any given update.", [
         name: :is_private,
         optional: true,
         type: :boolean
+      },
+      %{
+        description:
+          "Optional. Unique number reserved for this gift when upgraded. See the number field in UniqueGift",
+        name: :unique_gift_number,
+        optional: true,
+        type: :integer
       }
     ]
   )
@@ -6141,14 +6546,22 @@ At most one of the optional parameters can be present in any given update.", [
       },
       %{
         description:
-          "Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, or “resale” for gifts bought from other users",
+          "Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users, “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through gift purchase offers",
         name: :origin,
         optional: false,
         type: :string
       },
       %{
-        description: "Optional. For gifts bought from other users, the price paid for the gift",
-        name: :last_resale_star_count,
+        description:
+          "Optional. For gifts bought from other users, the currency in which the payment for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins.",
+        name: :last_resale_currency,
+        optional: true,
+        type: :string
+      },
+      %{
+        description:
+          "Optional. For gifts bought from other users, the price paid for the gift in either Telegram Stars or nanotoncoins",
+        name: :last_resale_amount,
         optional: true,
         type: :integer
       },
@@ -6249,15 +6662,29 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
-        "Optional. Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars",
+        "Optional. Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars; for gifts received on behalf of business accounts only",
       name: :convert_star_count,
       optional: true,
       type: :integer
     },
     %{
       description:
-        "Optional. Number of Telegram Stars that were paid by the sender for the ability to upgrade the gift",
+        "Optional. Number of Telegram Stars that were paid for the ability to upgrade the gift",
       name: :prepaid_upgrade_star_count,
+      optional: true,
+      type: :integer
+    },
+    %{
+      description:
+        "Optional. True, if the gift's upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only",
+      name: :is_upgrade_separate,
+      optional: true,
+      type: :boolean
+    },
+    %{
+      description:
+        "Optional. Unique number reserved for this gift when upgraded. See the number field in UniqueGift",
+      name: :unique_gift_number,
       optional: true,
       type: :integer
     }
@@ -6373,6 +6800,12 @@ At most one of the optional parameters can be present in any given update.", [
       %{
         description: "True, if a Telegram Premium subscription is accepted",
         name: :premium_subscription,
+        optional: false,
+        type: :boolean
+      },
+      %{
+        description: "True, if transfers of unique gifts from channels are accepted",
+        name: :gifts_from_channels,
         optional: false,
         type: :boolean
       }
@@ -6721,6 +7154,29 @@ At most one of the optional parameters can be present in any given update.", [
       type: Telegex.Type.ChatBoostSource
     }
   ])
+
+  deftype(ChatOwnerLeft, "Describes a service message about the chat owner leaving the chat.", [
+    %{
+      description:
+        "Optional. The user which will be the new owner of the chat if the previous owner does not return to the chat",
+      name: :new_owner,
+      optional: true,
+      type: Telegex.Type.User
+    }
+  ])
+
+  deftype(
+    ChatOwnerChanged,
+    "Describes a service message about an ownership change in the chat.",
+    [
+      %{
+        description: "The new owner of the chat",
+        name: :new_owner,
+        optional: false,
+        type: Telegex.Type.User
+      }
+    ]
+  )
 
   deftype(UserChatBoosts, "This object represents a list of boosts added to a chat by a user.", [
     %{
