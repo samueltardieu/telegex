@@ -595,6 +595,13 @@ At most one of the optional parameters can be present in any given update.", [
       name: :removed_chat_boost,
       optional: true,
       type: Telegex.Type.ChatBoostRemoved
+    },
+    %{
+      description:
+        "Optional. A new bot was created to be managed by the bot, or token or owner of a managed bot was changed",
+      name: :managed_bot,
+      optional: true,
+      type: Telegex.Type.ManagedBotUpdated
     }
   ])
 
@@ -748,6 +755,13 @@ At most one of the optional parameters can be present in any given update.", [
       description:
         "Optional. True, if the bot allows users to create and delete topics in private chats. Returned only in getMe.",
       name: :allows_users_to_create_topics,
+      optional: true,
+      type: :boolean
+    },
+    %{
+      description:
+        "Optional. True, if other bots can be created to be controlled by the bot. Returned only in getMe.",
+      name: :can_manage_bots,
       optional: true,
       type: :boolean
     }
@@ -1277,6 +1291,13 @@ At most one of the optional parameters can be present in any given update.", [
       type: :integer
     },
     %{
+      description:
+        "Optional. Persistent identifier of the specific poll option that is being replied to",
+      name: :reply_to_poll_option_id,
+      optional: true,
+      type: :string
+    },
+    %{
       description: "Optional. Bot through which the message was sent",
       name: :via_bot,
       optional: true,
@@ -1756,10 +1777,29 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
+        "Optional. Service message: user created a bot that will be managed by the current bot",
+      name: :managed_bot_created,
+      optional: true,
+      type: Telegex.Type.ManagedBotCreated
+    },
+    %{
+      description:
         "Optional. Service message: the price for paid messages has changed in the chat",
       name: :paid_message_price_changed,
       optional: true,
       type: Telegex.Type.PaidMessagePriceChanged
+    },
+    %{
+      description: "Optional. Service message: answer option was added to a poll",
+      name: :poll_option_added,
+      optional: true,
+      type: Telegex.Type.PollOptionAdded
+    },
+    %{
+      description: "Optional. Service message: answer option was deleted from a poll",
+      name: :poll_option_deleted,
+      optional: true,
+      type: Telegex.Type.PollOptionDeleted
     },
     %{
       description: "Optional. Service message: a suggested post was approved",
@@ -1944,7 +1984,7 @@ At most one of the optional parameters can be present in any given update.", [
       },
       %{
         description:
-          "Optional. Special entities that appear in the quote. Currently, only bold, italic, underline, strikethrough, spoiler, and custom_emoji entities are kept in quotes.",
+          "Optional. Special entities that appear in the quote. Currently, only bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities are kept in quotes.",
         name: :entities,
         optional: true,
         type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
@@ -2152,7 +2192,7 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
-        "Optional. Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including bold, italic, underline, strikethrough, spoiler, and custom_emoji entities. The message will fail to send if the quote isn't found in the original message.",
+        "Optional. Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities. The message will fail to send if the quote isn't found in the original message.",
       name: :quote,
       optional: true,
       type: :string
@@ -2182,6 +2222,12 @@ At most one of the optional parameters can be present in any given update.", [
       name: :checklist_task_id,
       optional: true,
       type: :integer
+    },
+    %{
+      description: "Optional. Persistent identifier of the specific poll option to be replied to",
+      name: :poll_option_id,
+      optional: true,
+      type: :string
     }
   ])
 
@@ -2803,6 +2849,12 @@ At most one of the optional parameters can be present in any given update.", [
   ])
 
   deftype(PollOption, "This object contains information about one answer option in a poll.", [
+    %{
+      description: "Unique identifier of the option, persistent on option addition and deletion",
+      name: :persistent_id,
+      optional: false,
+      type: :string
+    },
     %{description: "Option text, 1-100 characters", name: :text, optional: false, type: :string},
     %{
       description:
@@ -2812,9 +2864,30 @@ At most one of the optional parameters can be present in any given update.", [
       type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
     },
     %{
-      description: "Number of users that voted for this option",
+      description: "Number of users who voted for this option; may be 0 if unknown",
       name: :voter_count,
       optional: false,
+      type: :integer
+    },
+    %{
+      description:
+        "Optional. User who added the option; omitted if the option wasn't added by a user after poll creation",
+      name: :added_by_user,
+      optional: true,
+      type: Telegex.Type.User
+    },
+    %{
+      description:
+        "Optional. Chat that added the option; omitted if the option wasn't added by a chat after poll creation",
+      name: :added_by_chat,
+      optional: true,
+      type: Telegex.Type.Chat
+    },
+    %{
+      description:
+        "Optional. Point in time (Unix timestamp) when the option was added; omitted if the option existed in the original poll",
+      name: :addition_date,
+      optional: true,
       type: :integer
     }
   ])
@@ -2868,6 +2941,13 @@ At most one of the optional parameters can be present in any given update.", [
       name: :option_ids,
       optional: false,
       type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: :integer}
+    },
+    %{
+      description:
+        "Persistent identifiers of the chosen answer options. May be empty if the vote was retracted.",
+      name: :option_persistent_ids,
+      optional: false,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: :string}
     }
   ])
 
@@ -2923,11 +3003,17 @@ At most one of the optional parameters can be present in any given update.", [
       type: :boolean
     },
     %{
+      description: "True, if the poll allows to change the chosen answer options",
+      name: :allows_revoting,
+      optional: false,
+      type: :boolean
+    },
+    %{
       description:
-        "Optional. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.",
-      name: :correct_option_id,
+        "Optional. Array of 0-based identifiers of the correct answer options. Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot.",
+      name: :correct_option_ids,
       optional: true,
-      type: :integer
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: :integer}
     },
     %{
       description:
@@ -2955,6 +3041,19 @@ At most one of the optional parameters can be present in any given update.", [
       name: :close_date,
       optional: true,
       type: :integer
+    },
+    %{
+      description: "Optional. Description of the poll; for polls inside the Message object only",
+      name: :description,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. Special entities like usernames, URLs, bot commands, etc. that appear in the description",
+      name: :description_entities,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
     }
   ])
 
@@ -3043,7 +3142,7 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
-        "Optional. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, and custom_emoji entities are allowed.",
+        "Optional. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities are allowed.",
       name: :text_entities,
       optional: true,
       type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
@@ -3066,7 +3165,7 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
-        "Optional. List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, and custom_emoji entities are allowed.",
+        "Optional. List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities are allowed.",
       name: :title_entities,
       optional: true,
       type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
@@ -3269,6 +3368,86 @@ At most one of the optional parameters can be present in any given update.", [
       }
     ]
   )
+
+  deftype(
+    ManagedBotCreated,
+    "This object contains information about the bot that was created to be managed by the current bot.",
+    [
+      %{
+        description:
+          "Information about the bot. The bot's token can be fetched using the method getManagedBotToken.",
+        name: :bot,
+        optional: false,
+        type: Telegex.Type.User
+      }
+    ]
+  )
+
+  deftype(
+    ManagedBotUpdated,
+    "This object contains information about the creation, token update, or owner update of a bot that is managed by the current bot.",
+    [
+      %{
+        description: "User that created the bot",
+        name: :user,
+        optional: false,
+        type: Telegex.Type.User
+      },
+      %{
+        description:
+          "Information about the bot. Token of the bot can be fetched using the method getManagedBotToken.",
+        name: :bot,
+        optional: false,
+        type: Telegex.Type.User
+      }
+    ]
+  )
+
+  deftype(PollOptionAdded, "Describes a service message about an option added to a poll.", [
+    %{
+      description:
+        "Optional. Message containing the poll to which the option was added, if known. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply.",
+      name: :poll_message,
+      optional: true,
+      type: Telegex.Type.MaybeInaccessibleMessage
+    },
+    %{
+      description: "Unique identifier of the added option",
+      name: :option_persistent_id,
+      optional: false,
+      type: :string
+    },
+    %{description: "Option text", name: :option_text, optional: false, type: :string},
+    %{
+      description: "Optional. Special entities that appear in the option_text",
+      name: :option_text_entities,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+    }
+  ])
+
+  deftype(PollOptionDeleted, "Describes a service message about an option deleted from a poll.", [
+    %{
+      description:
+        "Optional. Message containing the poll from which the option was deleted, if known. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply.",
+      name: :poll_message,
+      optional: true,
+      type: Telegex.Type.MaybeInaccessibleMessage
+    },
+    %{
+      description: "Unique identifier of the deleted option",
+      name: :option_persistent_id,
+      optional: false,
+      type: :string
+    },
+    %{description: "Option text", name: :option_text, optional: false, type: :string},
+    %{
+      description: "Optional. Special entities that appear in the option_text",
+      name: :option_text_entities,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+    }
+  ])
 
   deftype(
     ChatBoostAdded,
@@ -4358,6 +4537,13 @@ At most one of the optional parameters can be present in any given update.", [
       },
       %{
         description:
+          "Optional. If specified, pressing the button will ask the user to create and share a bot that will be managed by the current bot. Available for bots that enabled management of other bots in the @BotFather Mini App. Available in private chats only.",
+        name: :request_managed_bot,
+        optional: true,
+        type: Telegex.Type.KeyboardButtonRequestManagedBot
+      },
+      %{
+        description:
           "Optional. If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only.",
         name: :request_contact,
         optional: true,
@@ -4516,6 +4702,31 @@ At most one of the optional parameters can be present in any given update.", [
         name: :request_photo,
         optional: true,
         type: :boolean
+      }
+    ]
+  )
+
+  deftype(
+    KeyboardButtonRequestManagedBot,
+    "This object defines the parameters for the creation of a managed bot. Information about the created bot will be shared with the bot using the update managed_bot and a Message with the field managed_bot_created.",
+    [
+      %{
+        description: "Signed 32-bit identifier of the request. Must be unique within the message",
+        name: :request_id,
+        optional: false,
+        type: :integer
+      },
+      %{
+        description: "Optional. Suggested name for the bot",
+        name: :suggested_name,
+        optional: true,
+        type: :string
+      },
+      %{
+        description: "Optional. Suggested username for the bot",
+        name: :suggested_username,
+        optional: true,
+        type: :string
       }
     ]
   )
@@ -7350,6 +7561,53 @@ At most one of the optional parameters can be present in any given update.", [
     ]
   )
 
+  deftype(
+    SentWebAppMessage,
+    "Describes an inline message sent by a Web App on behalf of a user.",
+    [
+      %{
+        description:
+          "Optional. Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message.",
+        name: :inline_message_id,
+        optional: true,
+        type: :string
+      }
+    ]
+  )
+
+  deftype(
+    PreparedInlineMessage,
+    "Describes an inline message to be sent by a user of a Mini App.",
+    [
+      %{
+        description: "Unique identifier of the prepared message",
+        name: :id,
+        optional: false,
+        type: :string
+      },
+      %{
+        description:
+          "Expiration date of the prepared message, in Unix time. Expired prepared messages can no longer be used",
+        name: :expiration_date,
+        optional: false,
+        type: :integer
+      }
+    ]
+  )
+
+  deftype(
+    PreparedKeyboardButton,
+    "Describes a keyboard button to be used by a user of a Mini App.",
+    [
+      %{
+        description: "Unique identifier of the keyboard button",
+        name: :id,
+        optional: false,
+        type: :string
+      }
+    ]
+  )
+
   deftype(ResponseParameters, "Describes why a request was unsuccessful.", [
     %{
       description:
@@ -9847,40 +10105,6 @@ At most one of the optional parameters can be present in any given update.", [
         name: :query,
         optional: false,
         type: :string
-      }
-    ]
-  )
-
-  deftype(
-    SentWebAppMessage,
-    "Describes an inline message sent by a Web App on behalf of a user.",
-    [
-      %{
-        description:
-          "Optional. Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message.",
-        name: :inline_message_id,
-        optional: true,
-        type: :string
-      }
-    ]
-  )
-
-  deftype(
-    PreparedInlineMessage,
-    "Describes an inline message to be sent by a user of a Mini App.",
-    [
-      %{
-        description: "Unique identifier of the prepared message",
-        name: :id,
-        optional: false,
-        type: :string
-      },
-      %{
-        description:
-          "Expiration date of the prepared message, in Unix time. Expired prepared messages can no longer be used",
-        name: :expiration_date,
-        optional: false,
-        type: :integer
       }
     ]
   )

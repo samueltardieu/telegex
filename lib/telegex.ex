@@ -2194,18 +2194,43 @@ defmodule Telegex do
         type: :string
       },
       %{
-        description:
-          "True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False",
+        description: "Pass True, if the poll allows multiple answers, defaults to False",
         name: :allows_multiple_answers,
         required: false,
         type: :boolean
       },
       %{
         description:
-          "0-based identifier of the correct answer option, required for polls in quiz mode",
-        name: :correct_option_id,
+          "Pass True, if the poll allows to change chosen answer options, defaults to False for quizzes and to True for regular polls",
+        name: :allows_revoting,
         required: false,
-        type: :integer
+        type: :boolean
+      },
+      %{
+        description: "Pass True, if the poll options must be shown in random order",
+        name: :shuffle_options,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True, if answer options can be added to the poll after creation; not supported for anonymous polls and quizzes",
+        name: :allow_adding_options,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description: "Pass True, if poll results must be shown only after the poll closes",
+        name: :hide_results_until_closes,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "A JSON-serialized list of monotonically increasing 0-based identifiers of the correct answer options, required for polls in quiz mode",
+        name: :correct_option_ids,
+        required: false,
+        type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: :integer}
       },
       %{
         description:
@@ -2230,14 +2255,14 @@ defmodule Telegex do
       },
       %{
         description:
-          "Amount of time in seconds the poll will be active after creation, 5-600. Can't be used together with close_date.",
+          "Amount of time in seconds the poll will be active after creation, 5-2628000. Can't be used together with close_date.",
         name: :open_period,
         required: false,
         type: :integer
       },
       %{
         description:
-          "Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.",
+          "Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 2628000 seconds in the future. Can't be used together with open_period.",
         name: :close_date,
         required: false,
         type: :integer
@@ -2248,6 +2273,27 @@ defmodule Telegex do
         name: :is_closed,
         required: false,
         type: :boolean
+      },
+      %{
+        description:
+          "Description of the poll to be sent, 0-1024 characters after entities parsing",
+        name: :description,
+        required: false,
+        type: :string
+      },
+      %{
+        description:
+          "Mode for parsing entities in the poll description. See formatting options for more details.",
+        name: :description_parse_mode,
+        required: false,
+        type: :string
+      },
+      %{
+        description:
+          "A JSON-serialized list of special entities that appear in the poll description, which can be specified instead of description_parse_mode",
+        name: :description_entities,
+        required: false,
+        type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
       },
       %{
         description:
@@ -3865,6 +3911,34 @@ defmodule Telegex do
   )
 
   defmethod(
+    "getManagedBotToken",
+    "Use this method to get the token of a managed bot. Returns the token as String on success.",
+    [
+      %{
+        description: "User identifier of the managed bot whose token will be returned",
+        name: :user_id,
+        required: true,
+        type: :integer
+      }
+    ],
+    :string
+  )
+
+  defmethod(
+    "replaceManagedBotToken",
+    "Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as String on success.",
+    [
+      %{
+        description: "User identifier of the managed bot whose token will be replaced",
+        name: :user_id,
+        required: true,
+        type: :integer
+      }
+    ],
+    :string
+  )
+
+  defmethod(
     "setMyCommands",
     "Use this method to change the list of the bot's commands. See this manual for more details about bot commands. Returns True on success.",
     [
@@ -4185,14 +4259,14 @@ defmodule Telegex do
       },
       %{
         description:
-          "Mode for parsing entities in the text. See formatting options for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.",
+          "Mode for parsing entities in the text. See formatting options for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.",
         name: :text_parse_mode,
         required: false,
         type: :string
       },
       %{
         description:
-          "A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of text_parse_mode. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.",
+          "A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of text_parse_mode. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.",
         name: :text_entities,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
@@ -4235,14 +4309,14 @@ defmodule Telegex do
       },
       %{
         description:
-          "Mode for parsing entities in the text. See formatting options for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.",
+          "Mode for parsing entities in the text. See formatting options for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.",
         name: :text_parse_mode,
         required: false,
         type: :string
       },
       %{
         description:
-          "A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of text_parse_mode. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.",
+          "A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of text_parse_mode. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.",
         name: :text_entities,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
@@ -5052,6 +5126,91 @@ defmodule Telegex do
       }
     ],
     :boolean
+  )
+
+  defmethod(
+    "answerWebAppQuery",
+    "Use this method to set the result of an interaction with a Web App and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a SentWebAppMessage object is returned.",
+    [
+      %{
+        description: "Unique identifier for the query to be answered",
+        name: :web_app_query_id,
+        required: true,
+        type: :string
+      },
+      %{
+        description: "A JSON-serialized object describing the message to be sent",
+        name: :result,
+        required: true,
+        type: Telegex.Type.InlineQueryResult
+      }
+    ],
+    Telegex.Type.SentWebAppMessage
+  )
+
+  defmethod(
+    "savePreparedInlineMessage",
+    "Stores a message that can be sent by a user of a Mini App. Returns a PreparedInlineMessage object.",
+    [
+      %{
+        description: "Unique identifier of the target user that can use the prepared message",
+        name: :user_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description: "A JSON-serialized object describing the message to be sent",
+        name: :result,
+        required: true,
+        type: Telegex.Type.InlineQueryResult
+      },
+      %{
+        description: "Pass True if the message can be sent to private chats with users",
+        name: :allow_user_chats,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description: "Pass True if the message can be sent to private chats with bots",
+        name: :allow_bot_chats,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description: "Pass True if the message can be sent to group and supergroup chats",
+        name: :allow_group_chats,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description: "Pass True if the message can be sent to channel chats",
+        name: :allow_channel_chats,
+        required: false,
+        type: :boolean
+      }
+    ],
+    Telegex.Type.PreparedInlineMessage
+  )
+
+  defmethod(
+    "savePreparedKeyboardButton",
+    "Stores a keyboard button that can be used by a user within a Mini App. Returns a PreparedKeyboardButton object.",
+    [
+      %{
+        description: "Unique identifier of the target user that can use the button",
+        name: :user_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description:
+          "A JSON-serialized object describing the button to be saved. The button must be of the type request_users, request_chat, or request_managed_bot",
+        name: :button,
+        required: true,
+        type: Telegex.Type.KeyboardButton
+      }
+    ],
+    Telegex.Type.PreparedKeyboardButton
   )
 
   defmethod(
@@ -6043,70 +6202,6 @@ No more than 50 results per query are allowed.",
       }
     ],
     :boolean
-  )
-
-  defmethod(
-    "answerWebAppQuery",
-    "Use this method to set the result of an interaction with a Web App and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a SentWebAppMessage object is returned.",
-    [
-      %{
-        description: "Unique identifier for the query to be answered",
-        name: :web_app_query_id,
-        required: true,
-        type: :string
-      },
-      %{
-        description: "A JSON-serialized object describing the message to be sent",
-        name: :result,
-        required: true,
-        type: Telegex.Type.InlineQueryResult
-      }
-    ],
-    Telegex.Type.SentWebAppMessage
-  )
-
-  defmethod(
-    "savePreparedInlineMessage",
-    "Stores a message that can be sent by a user of a Mini App. Returns a PreparedInlineMessage object.",
-    [
-      %{
-        description: "Unique identifier of the target user that can use the prepared message",
-        name: :user_id,
-        required: true,
-        type: :integer
-      },
-      %{
-        description: "A JSON-serialized object describing the message to be sent",
-        name: :result,
-        required: true,
-        type: Telegex.Type.InlineQueryResult
-      },
-      %{
-        description: "Pass True if the message can be sent to private chats with users",
-        name: :allow_user_chats,
-        required: false,
-        type: :boolean
-      },
-      %{
-        description: "Pass True if the message can be sent to private chats with bots",
-        name: :allow_bot_chats,
-        required: false,
-        type: :boolean
-      },
-      %{
-        description: "Pass True if the message can be sent to group and supergroup chats",
-        name: :allow_group_chats,
-        required: false,
-        type: :boolean
-      },
-      %{
-        description: "Pass True if the message can be sent to channel chats",
-        name: :allow_channel_chats,
-        required: false,
-        type: :boolean
-      }
-    ],
-    Telegex.Type.PreparedInlineMessage
   )
 
   defmethod(
