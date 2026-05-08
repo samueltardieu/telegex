@@ -150,7 +150,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -210,7 +210,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -260,7 +260,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -281,7 +281,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)",
+          "Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format @username)",
         name: :from_chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -335,7 +335,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -356,7 +356,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)",
+          "Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format @username)",
         name: :from_chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -391,7 +391,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -412,7 +412,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)",
+          "Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format @username)",
         name: :from_chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -472,7 +472,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -522,7 +522,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -543,7 +543,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)",
+          "Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format @username)",
         name: :from_chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -591,7 +591,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -668,7 +668,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -713,6 +713,150 @@ defmodule Telegex do
   )
 
   defmethod(
+    "sendLivePhoto",
+    "Use this method to send live photos. On success, the sent Message is returned.",
+    [
+      %{
+        description:
+          "Unique identifier of the business connection on behalf of which the message will be sent",
+        name: :business_connection_id,
+        required: false,
+        type: :string
+      },
+      %{
+        description:
+          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+        name: :chat_id,
+        required: true,
+        type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
+      },
+      %{
+        description:
+          "Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only",
+        name: :message_thread_id,
+        required: false,
+        type: :integer
+      },
+      %{
+        description:
+          "Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat",
+        name: :direct_messages_topic_id,
+        required: false,
+        type: :integer
+      },
+      %{
+        description:
+          "Live photo video to send. The video must be no longer than 10 seconds and must not exceed 10 MB in size. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. More information on Sending Files ». Sending live photos by a URL is currently unsupported.",
+        name: :live_photo,
+        required: true,
+        type: %{
+          __struct__: Telegex.TypeDefiner.UnionType,
+          types: [Telegex.Type.InputFile, :string]
+        }
+      },
+      %{
+        description:
+          "The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. More information on Sending Files ». Sending live photos by a URL is currently unsupported.",
+        name: :photo,
+        required: true,
+        type: %{
+          __struct__: Telegex.TypeDefiner.UnionType,
+          types: [Telegex.Type.InputFile, :string]
+        }
+      },
+      %{
+        description:
+          "Video caption (may also be used when resending videos by file_id), 0-1024 characters after entities parsing",
+        name: :caption,
+        required: false,
+        type: :string
+      },
+      %{
+        description:
+          "Mode for parsing entities in the video caption. See formatting options for more details.",
+        name: :parse_mode,
+        required: false,
+        type: :string
+      },
+      %{
+        description:
+          "A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode",
+        name: :caption_entities,
+        required: false,
+        type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+      },
+      %{
+        description: "Pass True, if the caption must be shown above the message media",
+        name: :show_caption_above_media,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description: "Pass True if the video needs to be covered with a spoiler animation",
+        name: :has_spoiler,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Sends the message silently. Users will receive a notification with no sound.",
+        name: :disable_notification,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description: "Protects the contents of the sent message from forwarding and saving",
+        name: :protect_content,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
+        name: :allow_paid_broadcast,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "Unique identifier of the message effect to be added to the message; for private chats only",
+        name: :message_effect_id,
+        required: false,
+        type: :string
+      },
+      %{
+        description:
+          "A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.",
+        name: :suggested_post_parameters,
+        required: false,
+        type: Telegex.Type.SuggestedPostParameters
+      },
+      %{
+        description: "Description of the message to reply to",
+        name: :reply_parameters,
+        required: false,
+        type: Telegex.Type.ReplyParameters
+      },
+      %{
+        description:
+          "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user.",
+        name: :reply_markup,
+        required: false,
+        type: %{
+          __struct__: Telegex.TypeDefiner.UnionType,
+          types: [
+            Telegex.Type.InlineKeyboardMarkup,
+            Telegex.Type.ReplyKeyboardMarkup,
+            Telegex.Type.ReplyKeyboardRemove,
+            Telegex.Type.ForceReply
+          ]
+        }
+      }
+    ],
+    Telegex.Type.Message
+  )
+
+  defmethod(
     "sendAudio",
     "Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.",
     [
@@ -725,7 +869,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -807,7 +951,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -864,7 +1008,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -946,7 +1090,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -1003,7 +1147,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -1120,7 +1264,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -1177,7 +1321,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -1272,7 +1416,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -1329,7 +1473,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -1399,7 +1543,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -1456,7 +1600,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -1522,7 +1666,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -1579,7 +1723,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername). If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat's balance. Otherwise, they will be credited to the bot's balance.",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username. If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat's balance. Otherwise, they will be credited to the bot's balance.",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -1659,7 +1803,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -1698,7 +1842,7 @@ defmodule Telegex do
 
   defmethod(
     "sendMediaGroup",
-    "Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Message objects that were sent is returned.",
+    "Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Message objects that were sent is returned.",
     [
       %{
         description:
@@ -1709,7 +1853,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -1741,6 +1885,10 @@ defmodule Telegex do
               __struct__: Telegex.TypeDefiner.ArrayType,
               elem_type: Telegex.Type.InputMediaDocument
             },
+            %{
+              __struct__: Telegex.TypeDefiner.ArrayType,
+              elem_type: Telegex.Type.InputMediaLivePhoto
+            },
             %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.InputMediaPhoto},
             %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.InputMediaVideo}
           ]
@@ -1760,7 +1908,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -1795,7 +1943,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -1858,7 +2006,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -1915,7 +2063,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -1978,7 +2126,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -2035,7 +2183,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2083,7 +2231,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -2140,7 +2288,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername). Polls can't be sent to channel direct messages chats.",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username. Polls can't be sent to channel direct messages chats.",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2173,7 +2321,7 @@ defmodule Telegex do
         type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
       },
       %{
-        description: "A JSON-serialized list of 2-12 answer options",
+        description: "A JSON-serialized list of 1-12 answer options",
         name: :options,
         required: true,
         type: %{
@@ -2227,6 +2375,20 @@ defmodule Telegex do
       },
       %{
         description:
+          "Pass True, if voting is limited to users who have been members of the chat where the poll is being sent for more than 24 hours; for channel chats only",
+        name: :members_only,
+        required: false,
+        type: :boolean
+      },
+      %{
+        description:
+          "A JSON-serialized list of 0-12 two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which users can vote in the poll; for channel chats only. If omitted or empty, then users from any country can participate in the poll.",
+        name: :country_codes,
+        required: false,
+        type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: :string}
+      },
+      %{
+        description:
           "A JSON-serialized list of monotonically increasing 0-based identifiers of the correct answer options, required for polls in quiz mode",
         name: :correct_option_ids,
         required: false,
@@ -2252,6 +2414,12 @@ defmodule Telegex do
         name: :explanation_entities,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+      },
+      %{
+        description: "Media added to the quiz explanation",
+        name: :explanation_media,
+        required: false,
+        type: Telegex.Type.InputPollMedia
       },
       %{
         description:
@@ -2296,6 +2464,12 @@ defmodule Telegex do
         type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
       },
       %{
+        description: "Media added to the poll description",
+        name: :media,
+        required: false,
+        type: Telegex.Type.InputPollMedia
+      },
+      %{
         description:
           "Sends the message silently. Users will receive a notification with no sound.",
         name: :disable_notification,
@@ -2310,7 +2484,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -2359,10 +2533,11 @@ defmodule Telegex do
         type: :string
       },
       %{
-        description: "Unique identifier for the target chat",
+        description:
+          "Unique identifier for the target chat or username of the target bot in the format @username",
         name: :chat_id,
         required: true,
-        type: :integer
+        type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
       },
       %{
         description: "A JSON-serialized object for the checklist to send",
@@ -2418,7 +2593,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2459,7 +2634,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -2505,7 +2680,7 @@ defmodule Telegex do
 
   defmethod(
     "sendMessageDraft",
-    "Use this method to stream a partial message to a user while the message is being generated. Returns True on success.",
+    "Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you must call sendMessage with the complete message to persist it in the user's chat. Returns True on success.",
     [
       %{
         description: "Unique identifier for the target private chat",
@@ -2521,15 +2696,16 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated",
+          "Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated.",
         name: :draft_id,
         required: true,
         type: :integer
       },
       %{
-        description: "Text of the message to be sent, 1-4096 characters after entities parsing",
+        description:
+          "Text of the message to be sent, 0-4096 characters after entities parsing. Pass an empty text to show a “Thinking…” placeholder.",
         name: :text,
-        required: true,
+        required: false,
         type: :string
       },
       %{
@@ -2563,7 +2739,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername). Channel chats and channel direct messages chats aren't supported.",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username. Channel chats and channel direct messages chats aren't supported.",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2592,7 +2768,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2724,7 +2900,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)",
+          "Unique identifier for the target group or username of the target supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2759,7 +2935,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)",
+          "Unique identifier for the target group or username of the target supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2786,7 +2962,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2827,7 +3003,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2960,7 +3136,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2988,7 +3164,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3015,7 +3191,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3036,7 +3212,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3057,7 +3233,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3085,7 +3261,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3100,7 +3276,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3141,7 +3317,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3188,7 +3364,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target channel chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target channel chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3223,7 +3399,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3250,7 +3426,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier of the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier of the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3271,7 +3447,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3292,7 +3468,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3313,7 +3489,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3334,7 +3510,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3349,7 +3525,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3370,7 +3546,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3398,7 +3574,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3433,7 +3609,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3455,7 +3631,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3470,7 +3646,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername). Channel direct messages chats aren't supported; leave the corresponding channel instead.",
+          "Unique identifier for the target chat or username of the target supergroup or channel in the format @username. Channel direct messages chats aren't supported; leave the corresponding channel instead.",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3485,7 +3661,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3496,14 +3672,21 @@ defmodule Telegex do
 
   defmethod(
     "getChatAdministrators",
-    "Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects.",
+    "Use this method to get a list of administrators in a chat. Returns an Array of ChatMember objects.",
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
+      },
+      %{
+        description:
+          "Pass True to additionally receive all bots that are administrators of the chat. By default, bots other than the current bot are omitted.",
+        name: :return_bots,
+        required: false,
+        type: :boolean
       }
     ],
     %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.ChatMember}
@@ -3515,7 +3698,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3530,7 +3713,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3546,12 +3729,32 @@ defmodule Telegex do
   )
 
   defmethod(
+    "getUserPersonalChatMessages",
+    "Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an array of Message objects is returned.",
+    [
+      %{
+        description: "Unique identifier for the target user",
+        name: :user_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description: "The maximum number of messages to return; 1-20",
+        name: :limit,
+        required: true,
+        type: :integer
+      }
+    ],
+    %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.Message}
+  )
+
+  defmethod(
     "setChatStickerSet",
     "Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.",
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3572,7 +3775,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3594,7 +3797,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3624,7 +3827,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3659,7 +3862,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3680,7 +3883,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3701,7 +3904,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3722,7 +3925,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3743,7 +3946,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3764,7 +3967,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3779,7 +3982,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3794,7 +3997,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3809,7 +4012,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3824,7 +4027,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3876,12 +4079,32 @@ defmodule Telegex do
   )
 
   defmethod(
+    "answerGuestQuery",
+    "Use this method to reply to a received guest message. On success, a SentGuestMessage object is returned.",
+    [
+      %{
+        description: "Unique identifier for the query to be answered",
+        name: :guest_query_id,
+        required: true,
+        type: :string
+      },
+      %{
+        description: "A JSON-serialized object describing the message to be sent",
+        name: :result,
+        required: true,
+        type: Telegex.Type.InlineQueryResult
+      }
+    ],
+    Telegex.Type.SentGuestMessage
+  )
+
+  defmethod(
     "getUserChatBoosts",
     "Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a UserChatBoosts object.",
     [
       %{
         description:
-          "Unique identifier for the chat or username of the channel (in the format @channelusername)",
+          "Unique identifier for the chat or username of the channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -3936,6 +4159,48 @@ defmodule Telegex do
       }
     ],
     :string
+  )
+
+  defmethod(
+    "getManagedBotAccessSettings",
+    "Use this method to get the access settings of a managed bot. Returns a BotAccessSettings object on success.",
+    [
+      %{
+        description: "User identifier of the managed bot whose access settings will be returned",
+        name: :user_id,
+        required: true,
+        type: :integer
+      }
+    ],
+    Telegex.Type.BotAccessSettings
+  )
+
+  defmethod(
+    "setManagedBotAccessSettings",
+    "Use this method to change the access settings of a managed bot. Returns True on success.",
+    [
+      %{
+        description: "User identifier of the managed bot whose access settings will be changed",
+        name: :user_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description:
+          "Pass True, if only selected users can access the bot. The bot's owner can always access it.",
+        name: :is_access_restricted,
+        required: true,
+        type: :boolean
+      },
+      %{
+        description:
+          "A JSON-serialized list of up to 10 identifiers of users who will have access to the bot in addition to its owner. Ignored if is_access_restricted is false.",
+        name: :added_user_ids,
+        required: false,
+        type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: :integer}
+      }
+    ],
+    :boolean
   )
 
   defmethod(
@@ -4233,7 +4498,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Required if user_id is not specified. Unique identifier for the chat or username of the channel (in the format @channelusername) that will receive the gift.",
+          "Required if user_id is not specified. Unique identifier for the chat or username of the channel (in the format @username) that will receive the gift.",
         name: :chat_id,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -4352,7 +4617,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername). Channel direct messages chats can't be verified.",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username. Channel direct messages chats can't be verified.",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -4388,7 +4653,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -4776,7 +5041,7 @@ defmodule Telegex do
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5226,7 +5491,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username.",
         name: :chat_id,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5294,7 +5559,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username.",
         name: :chat_id,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5352,7 +5617,7 @@ defmodule Telegex do
 
   defmethod(
     "editMessageMedia",
-    "Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.",
+    "Use this method to edit animation, audio, document, live photo, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.",
     [
       %{
         description:
@@ -5363,7 +5628,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username.",
         name: :chat_id,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5411,7 +5676,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username.",
         name: :chat_id,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5482,7 +5747,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username.",
         name: :chat_id,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5523,10 +5788,11 @@ defmodule Telegex do
         type: :string
       },
       %{
-        description: "Unique identifier for the target chat",
+        description:
+          "Unique identifier for the target chat or username of the target bot in the format @username",
         name: :chat_id,
         required: true,
-        type: :integer
+        type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
       },
       %{
         description: "Unique identifier for the target message",
@@ -5563,7 +5829,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username.",
         name: :chat_id,
         required: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5605,7 +5871,7 @@ defmodule Telegex do
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5695,7 +5961,7 @@ Returns True on success.",
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5716,7 +5982,7 @@ Returns True on success.",
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5727,6 +5993,70 @@ Returns True on success.",
         name: :message_ids,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: :integer}
+      }
+    ],
+    :boolean
+  )
+
+  defmethod(
+    "deleteMessageReaction",
+    "Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.",
+    [
+      %{
+        description:
+          "Unique identifier for the target chat or username of the target supergroup (in the format @username)",
+        name: :chat_id,
+        required: true,
+        type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
+      },
+      %{
+        description: "Identifier of the target message",
+        name: :message_id,
+        required: true,
+        type: :integer
+      },
+      %{
+        description:
+          "Identifier of the user whose reaction will be removed, if the reaction was added by a user",
+        name: :user_id,
+        required: false,
+        type: :integer
+      },
+      %{
+        description:
+          "Identifier of the chat whose reaction will be removed, if the reaction was added by a chat",
+        name: :actor_chat_id,
+        required: false,
+        type: :integer
+      }
+    ],
+    :boolean
+  )
+
+  defmethod(
+    "deleteAllMessageReactions",
+    "Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.",
+    [
+      %{
+        description:
+          "Unique identifier for the target chat or username of the target supergroup (in the format @username)",
+        name: :chat_id,
+        required: true,
+        type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
+      },
+      %{
+        description:
+          "Identifier of the user whose reactions will be removed, if the reactions were added by a user",
+        name: :user_id,
+        required: false,
+        type: :integer
+      },
+      %{
+        description:
+          "Identifier of the chat whose reactions will be removed, if the reactions were added by a chat",
+        name: :actor_chat_id,
+        required: false,
+        type: :integer
       }
     ],
     :boolean
@@ -5745,7 +6075,7 @@ Returns True on success.",
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -5795,7 +6125,7 @@ Returns True on success.",
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -6210,7 +6540,7 @@ No more than 50 results per query are allowed.",
     [
       %{
         description:
-          "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username",
         name: :chat_id,
         required: true,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -6371,7 +6701,7 @@ No more than 50 results per query are allowed.",
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean
@@ -6718,10 +7048,10 @@ No more than 50 results per query are allowed.",
       },
       %{
         description:
-          "Unique identifier for the target chat. Games can't be sent to channel direct messages chats and channel chats.",
+          "Unique identifier for the target chat or username of the target bot in the format @username. Games can't be sent to channel direct messages chats and channel chats.",
         name: :chat_id,
         required: true,
-        type: :integer
+        type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
       },
       %{
         description:
@@ -6752,7 +7082,7 @@ No more than 50 results per query are allowed.",
       },
       %{
         description:
-          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance",
+          "Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.",
         name: :allow_paid_broadcast,
         required: false,
         type: :boolean

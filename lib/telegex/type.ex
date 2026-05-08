@@ -35,13 +35,73 @@ defmodule Telegex.Type do
   defunion(
     PaidMedia,
     "This object describes paid media. Currently, it can be one of",
-    [Telegex.Type.PaidMediaPreview, Telegex.Type.PaidMediaPhoto, Telegex.Type.PaidMediaVideo],
+    [
+      Telegex.Type.PaidMediaLivePhoto,
+      Telegex.Type.PaidMediaPhoto,
+      Telegex.Type.PaidMediaPreview,
+      Telegex.Type.PaidMediaVideo
+    ],
     discriminant: %{
       field: :type,
       mapping: %{
+        "live_photo" => [Telegex.Type.PaidMediaLivePhoto],
         "photo" => [Telegex.Type.PaidMediaPhoto],
         "preview" => [Telegex.Type.PaidMediaPreview],
         "video" => [Telegex.Type.PaidMediaVideo]
+      }
+    }
+  )
+
+  defunion(
+    InputPollMedia,
+    "This object represents the content of a poll description or a quiz explanation to be sent. It should be one of",
+    [
+      Telegex.Type.InputMediaAnimation,
+      Telegex.Type.InputMediaAudio,
+      Telegex.Type.InputMediaDocument,
+      Telegex.Type.InputMediaLivePhoto,
+      Telegex.Type.InputMediaLocation,
+      Telegex.Type.InputMediaPhoto,
+      Telegex.Type.InputMediaVenue,
+      Telegex.Type.InputMediaVideo
+    ],
+    discriminant: %{
+      field: :type,
+      mapping: %{
+        "animation" => [Telegex.Type.InputMediaAnimation],
+        "audio" => [Telegex.Type.InputMediaAudio],
+        "document" => [Telegex.Type.InputMediaDocument],
+        "live_photo" => [Telegex.Type.InputMediaLivePhoto],
+        "location" => [Telegex.Type.InputMediaLocation],
+        "photo" => [Telegex.Type.InputMediaPhoto],
+        "venue" => [Telegex.Type.InputMediaVenue],
+        "video" => [Telegex.Type.InputMediaVideo]
+      }
+    }
+  )
+
+  defunion(
+    InputPollOptionMedia,
+    "This object represents the content of a poll option to be sent. It should be one of",
+    [
+      Telegex.Type.InputMediaAnimation,
+      Telegex.Type.InputMediaLivePhoto,
+      Telegex.Type.InputMediaLocation,
+      Telegex.Type.InputMediaPhoto,
+      Telegex.Type.InputMediaSticker,
+      Telegex.Type.InputMediaVenue,
+      Telegex.Type.InputMediaVideo
+    ],
+    discriminant: %{
+      field: :type,
+      mapping: %{
+        "animation" => [Telegex.Type.InputMediaAnimation],
+        "live_photo" => [Telegex.Type.InputMediaLivePhoto],
+        "location" => [Telegex.Type.InputMediaLocation],
+        "photo" => [Telegex.Type.InputMediaPhoto],
+        "sticker" => [Telegex.Type.InputMediaSticker],
+        "venue" => [Telegex.Type.InputMediaVenue],
+        "video" => [Telegex.Type.InputMediaVideo]
       }
     }
   )
@@ -228,8 +288,9 @@ defmodule Telegex.Type do
     "This object represents the content of a media message to be sent. It should be one of",
     [
       Telegex.Type.InputMediaAnimation,
-      Telegex.Type.InputMediaDocument,
       Telegex.Type.InputMediaAudio,
+      Telegex.Type.InputMediaDocument,
+      Telegex.Type.InputMediaLivePhoto,
       Telegex.Type.InputMediaPhoto,
       Telegex.Type.InputMediaVideo
     ],
@@ -239,6 +300,7 @@ defmodule Telegex.Type do
         "animation" => [Telegex.Type.InputMediaAnimation],
         "audio" => [Telegex.Type.InputMediaAudio],
         "document" => [Telegex.Type.InputMediaDocument],
+        "live_photo" => [Telegex.Type.InputMediaLivePhoto],
         "photo" => [Telegex.Type.InputMediaPhoto],
         "video" => [Telegex.Type.InputMediaVideo]
       }
@@ -248,10 +310,15 @@ defmodule Telegex.Type do
   defunion(
     InputPaidMedia,
     "This object describes the paid media to be sent. Currently, it can be one of",
-    [Telegex.Type.InputPaidMediaPhoto, Telegex.Type.InputPaidMediaVideo],
+    [
+      Telegex.Type.InputPaidMediaLivePhoto,
+      Telegex.Type.InputPaidMediaPhoto,
+      Telegex.Type.InputPaidMediaVideo
+    ],
     discriminant: %{
       field: :type,
       mapping: %{
+        "live_photo" => [Telegex.Type.InputPaidMediaLivePhoto],
         "photo" => [Telegex.Type.InputPaidMediaPhoto],
         "video" => [Telegex.Type.InputPaidMediaVideo]
       }
@@ -435,7 +502,7 @@ defmodule Telegex.Type do
   )
 
   deftype(Update, "This object represents an incoming update.
-At most one of the optional parameters can be present in any given update.", [
+At most one of the optional fields can be present in any given update.", [
     %{
       description:
         "The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you're using webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.",
@@ -493,6 +560,13 @@ At most one of the optional parameters can be present in any given update.", [
       name: :deleted_business_messages,
       optional: true,
       type: Telegex.Type.BusinessMessagesDeleted
+    },
+    %{
+      description:
+        "Optional. New guest message. The bot can use the field Message.guest_query_id and the method answerGuestQuery to send a message in response.",
+      name: :guest_message,
+      optional: true,
+      type: Telegex.Type.Message
     },
     %{
       description:
@@ -726,6 +800,13 @@ At most one of the optional parameters can be present in any given update.", [
       type: :boolean
     },
     %{
+      description:
+        "Optional. True, if the bot supports guest queries from chats it is not a member of. Returned only in getMe.",
+      name: :supports_guest_queries,
+      optional: true,
+      type: :boolean
+    },
+    %{
       description: "Optional. True, if the bot supports inline queries. Returned only in getMe.",
       name: :supports_inline_queries,
       optional: true,
@@ -733,7 +814,7 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
-        "Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.",
+        "Optional. True, if the bot can be connected to a user account to manage it. Returned only in getMe.",
       name: :can_connect_to_business,
       optional: true,
       type: :boolean
@@ -1226,6 +1307,13 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
+        "Optional. The unique identifier for the guest query. Use this identifier with the method answerGuestQuery to send a response message. If non-empty, the message belongs to the chat where the guest bot was summoned, which may not coincide with other existing bot chats sharing the same identifier.",
+      name: :guest_query_id,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
         "Optional. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.",
       name: :business_connection_id,
       optional: true,
@@ -1302,6 +1390,20 @@ At most one of the optional parameters can be present in any given update.", [
       name: :via_bot,
       optional: true,
       type: Telegex.Type.User
+    },
+    %{
+      description:
+        "Optional. For a message sent by a guest bot, this is the user whose original message triggered the bot's response",
+      name: :guest_bot_caller_user,
+      optional: true,
+      type: Telegex.Type.User
+    },
+    %{
+      description:
+        "Optional. For a message sent by a guest bot, this is the chat whose original message triggered the bot's response",
+      name: :guest_bot_caller_chat,
+      optional: true,
+      type: Telegex.Type.Chat
     },
     %{
       description: "Optional. Date the message was last edited in Unix time",
@@ -1401,6 +1503,13 @@ At most one of the optional parameters can be present in any given update.", [
       name: :document,
       optional: true,
       type: Telegex.Type.Document
+    },
+    %{
+      description:
+        "Optional. Message is a live photo, information about the live photo. For backward compatibility, when this field is set, the photo field will also be set",
+      name: :live_photo,
+      optional: true,
+      type: Telegex.Type.LivePhoto
     },
     %{
       description: "Optional. Message contains paid media; information about the paid media",
@@ -2056,6 +2165,12 @@ At most one of the optional parameters can be present in any given update.", [
         type: Telegex.Type.Document
       },
       %{
+        description: "Optional. Message is a live photo, information about the live photo",
+        name: :live_photo,
+        optional: true,
+        type: Telegex.Type.LivePhoto
+      },
+      %{
         description: "Optional. Message contains paid media; information about the paid media",
         name: :paid_media,
         optional: true,
@@ -2178,7 +2293,7 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
-        "Optional. If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format @channelusername). Not supported for messages sent on behalf of a business account and messages from channel direct messages chats.",
+        "Optional. If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format @username. Not supported for messages sent on behalf of a business account and messages from channel direct messages chats.",
       name: :chat_id,
       optional: true,
       type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -2537,6 +2652,60 @@ At most one of the optional parameters can be present in any given update.", [
     ]
   )
 
+  deftype(LivePhoto, "This object represents a live photo.", [
+    %{
+      description: "Optional. Available sizes of the corresponding static photo",
+      name: :photo,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.PhotoSize}
+    },
+    %{
+      description:
+        "Identifier for the video file which can be used to download or reuse the file",
+      name: :file_id,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "Unique identifier for the video file which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
+      name: :file_unique_id,
+      optional: false,
+      type: :string
+    },
+    %{
+      description: "Video width as defined by the sender",
+      name: :width,
+      optional: false,
+      type: :integer
+    },
+    %{
+      description: "Video height as defined by the sender",
+      name: :height,
+      optional: false,
+      type: :integer
+    },
+    %{
+      description: "Duration of the video in seconds as defined by the sender",
+      name: :duration,
+      optional: false,
+      type: :integer
+    },
+    %{
+      description: "Optional. MIME type of the file as defined by the sender",
+      name: :mime_type,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.",
+      name: :file_size,
+      optional: true,
+      type: :integer
+    }
+  ])
+
   deftype(Story, "This object represents a story.", [
     %{
       description: "Chat that posted the story",
@@ -2756,6 +2925,31 @@ At most one of the optional parameters can be present in any given update.", [
     }
   ])
 
+  deftype(PaidMediaLivePhoto, "", [
+    %{
+      description: "Type of the paid media, always “live_photo”",
+      name: :type,
+      optional: false,
+      type: :string
+    },
+    %{description: "The photo", name: :live_photo, optional: false, type: Telegex.Type.LivePhoto}
+  ])
+
+  deftype(PaidMediaPhoto, "The paid media is a photo.", [
+    %{
+      description: "Type of the paid media, always “photo”",
+      name: :type,
+      optional: false,
+      type: :string
+    },
+    %{
+      description: "The photo",
+      name: :photo,
+      optional: false,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.PhotoSize}
+    }
+  ])
+
   deftype(PaidMediaPreview, "The paid media isn't available before the payment.", [
     %{
       description: "Type of the paid media, always “preview”",
@@ -2780,21 +2974,6 @@ At most one of the optional parameters can be present in any given update.", [
       name: :duration,
       optional: true,
       type: :integer
-    }
-  ])
-
-  deftype(PaidMediaPhoto, "The paid media is a photo.", [
-    %{
-      description: "Type of the paid media, always “photo”",
-      name: :type,
-      optional: false,
-      type: :string
-    },
-    %{
-      description: "The photo",
-      name: :photo,
-      optional: false,
-      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.PhotoSize}
     }
   ])
 
@@ -2848,6 +3027,66 @@ At most one of the optional parameters can be present in any given update.", [
     }
   ])
 
+  deftype(PollMedia, "At most one of the optional fields can be present in any given object.", [
+    %{
+      description: "Optional. Media is an animation, information about the animation",
+      name: :animation,
+      optional: true,
+      type: Telegex.Type.Animation
+    },
+    %{
+      description:
+        "Optional. Media is an audio file, information about the file; currently, can't be received in a poll option",
+      name: :audio,
+      optional: true,
+      type: Telegex.Type.Audio
+    },
+    %{
+      description:
+        "Optional. Media is a general file, information about the file; currently, can't be received in a poll option",
+      name: :document,
+      optional: true,
+      type: Telegex.Type.Document
+    },
+    %{
+      description: "Optional. Media is a live photo, information about the live photo",
+      name: :live_photo,
+      optional: true,
+      type: Telegex.Type.LivePhoto
+    },
+    %{
+      description: "Optional. Media is a shared location, information about the location",
+      name: :location,
+      optional: true,
+      type: Telegex.Type.Location
+    },
+    %{
+      description: "Optional. Media is a photo, available sizes of the photo",
+      name: :photo,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.PhotoSize}
+    },
+    %{
+      description:
+        "Optional. Media is a sticker, information about the sticker; currently, for poll options only",
+      name: :sticker,
+      optional: true,
+      type: Telegex.Type.Sticker
+    },
+    %{
+      description: "Optional. Media is a venue, information about the venue",
+      name: :venue,
+      optional: true,
+      type: Telegex.Type.Venue
+    },
+    %{
+      description: "Optional. Media is a video, information about the video",
+      name: :video,
+      optional: true,
+      type: Telegex.Type.Video
+    }
+  ])
+
   deftype(PollOption, "This object contains information about one answer option in a poll.", [
     %{
       description: "Unique identifier of the option, persistent on option addition and deletion",
@@ -2862,6 +3101,12 @@ At most one of the optional parameters can be present in any given update.", [
       name: :text_entities,
       optional: true,
       type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+    },
+    %{
+      description: "Optional. Media added to the poll option",
+      name: :media,
+      optional: true,
+      type: Telegex.Type.PollMedia
     },
     %{
       description: "Number of users who voted for this option; may be 0 if unknown",
@@ -2915,6 +3160,12 @@ At most one of the optional parameters can be present in any given update.", [
         name: :text_entities,
         optional: true,
         type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+      },
+      %{
+        description: "Optional. Media added to the poll option",
+        name: :media,
+        optional: true,
+        type: Telegex.Type.InputPollOptionMedia
       }
     ]
   )
@@ -3010,6 +3261,20 @@ At most one of the optional parameters can be present in any given update.", [
     },
     %{
       description:
+        "True if voting is limited to users who have been members of the chat where the poll was originally sent for more than 24 hours",
+      name: :members_only,
+      optional: false,
+      type: :boolean
+    },
+    %{
+      description:
+        "Optional. A list of two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which users can vote in the poll. If omitted, then users from any country can participate in the poll.",
+      name: :country_codes,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: :string}
+    },
+    %{
+      description:
         "Optional. Array of 0-based identifiers of the correct answer options. Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot.",
       name: :correct_option_ids,
       optional: true,
@@ -3028,6 +3293,12 @@ At most one of the optional parameters can be present in any given update.", [
       name: :explanation_entities,
       optional: true,
       type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+    },
+    %{
+      description: "Optional. Media added to the quiz explanation",
+      name: :explanation_media,
+      optional: true,
+      type: Telegex.Type.PollMedia
     },
     %{
       description: "Optional. Amount of time in seconds the poll will be active after creation",
@@ -3054,6 +3325,13 @@ At most one of the optional parameters can be present in any given update.", [
       name: :description_entities,
       optional: true,
       type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+    },
+    %{
+      description:
+        "Optional. Media added to the poll description; for polls inside the Message object only",
+      name: :media,
+      optional: true,
+      type: Telegex.Type.PollMedia
     }
   ])
 
@@ -4443,7 +4721,7 @@ At most one of the optional parameters can be present in any given update.", [
 
   deftype(
     ReplyKeyboardMarkup,
-    "This object represents a custom keyboard with reply options (see Introduction to bots for details and examples). Not supported in channels and for messages sent on behalf of a Telegram Business account.",
+    "This object represents a custom keyboard with reply options (see Introduction to bots for details and examples). Not supported in channels and for messages sent on behalf of a business account.",
     [
       %{
         description:
@@ -4747,7 +5025,7 @@ At most one of the optional parameters can be present in any given update.", [
 
   deftype(
     ReplyKeyboardRemove,
-    "Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup). Not supported in channels and for messages sent on behalf of a Telegram Business account.",
+    "Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup). Not supported in channels and for messages sent on behalf of a business account.",
     [
       %{
         description:
@@ -4821,7 +5099,7 @@ At most one of the optional parameters can be present in any given update.", [
       },
       %{
         description:
-          "Optional. Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.",
+          "Optional. Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account.",
         name: :web_app,
         optional: true,
         type: Telegex.Type.WebAppInfo
@@ -4835,21 +5113,21 @@ At most one of the optional parameters can be present in any given update.", [
       },
       %{
         description:
-          "Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.",
+          "Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a business account.",
         name: :switch_inline_query,
         optional: true,
         type: :string
       },
       %{
         description:
-          "Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.\n\nThis offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a Telegram Business account.",
+          "Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.\n\nThis offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a business account.",
         name: :switch_inline_query_current_chat,
         optional: true,
         type: :string
       },
       %{
         description:
-          "Optional. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.",
+          "Optional. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a business account.",
         name: :switch_inline_query_chosen_chat,
         optional: true,
         type: Telegex.Type.SwitchInlineQueryChosenChat
@@ -5014,7 +5292,7 @@ At most one of the optional parameters can be present in any given update.", [
 
   deftype(
     ForceReply,
-    "Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode. Not supported in channels and for messages sent on behalf of a Telegram Business account.",
+    "Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode. Not supported in channels and for messages sent on behalf of a user account.",
     [
       %{
         description:
@@ -5597,6 +5875,12 @@ At most one of the optional parameters can be present in any given update.", [
         type: :boolean
       },
       %{
+        description: "True, if the user is allowed to react to messages",
+        name: :can_react_to_messages,
+        optional: false,
+        type: :boolean
+      },
+      %{
         description: "True, if the user is allowed to edit their own tag",
         name: :can_edit_tag,
         optional: false,
@@ -5786,7 +6070,15 @@ At most one of the optional parameters can be present in any given update.", [
         type: :boolean
       },
       %{
-        description: "Optional. True, if the user is allowed to edit their own tag",
+        description:
+          "Optional. True, if the user is allowed to react to messages. If omitted, defaults to the value of can_send_messages.",
+        name: :can_react_to_messages,
+        optional: true,
+        type: :boolean
+      },
+      %{
+        description:
+          "Optional. True, if the user is allowed to edit their own tag. If omitted, defaults to the value of can_pin_messages.",
         name: :can_edit_tag,
         optional: true,
         type: :boolean
@@ -6985,6 +7277,23 @@ At most one of the optional parameters can be present in any given update.", [
     }
   ])
 
+  deftype(BotAccessSettings, "This object describes the access settings of a bot.", [
+    %{
+      description:
+        "True, if only selected users can access the bot. The bot's owner can always access it.",
+      name: :is_access_restricted,
+      optional: false,
+      type: :boolean
+    },
+    %{
+      description:
+        "Optional. The list of other users who have access to the bot if the access is restricted",
+      name: :added_users,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.User}
+    }
+  ])
+
   deftype(
     AcceptedGiftTypes,
     "This object describes the types of gifts that can be gifted to a user or a chat.",
@@ -7107,7 +7416,7 @@ At most one of the optional parameters can be present in any given update.", [
       %{description: "Scope type, must be chat", name: :type, optional: false, type: :string},
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername). Channel direct messages chats and channel chats aren't supported.",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username. Channel direct messages chats and channel chats aren't supported.",
         name: :chat_id,
         optional: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -7127,7 +7436,7 @@ At most one of the optional parameters can be present in any given update.", [
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername). Channel direct messages chats and channel chats aren't supported.",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username. Channel direct messages chats and channel chats aren't supported.",
         name: :chat_id,
         optional: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -7147,7 +7456,7 @@ At most one of the optional parameters can be present in any given update.", [
       },
       %{
         description:
-          "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername). Channel direct messages chats and channel chats aren't supported.",
+          "Unique identifier for the target chat or username of the target supergroup in the format @username. Channel direct messages chats and channel chats aren't supported.",
         name: :chat_id,
         optional: false,
         type: %{__struct__: Telegex.TypeDefiner.UnionType, types: [:integer, :string]}
@@ -7369,7 +7678,7 @@ At most one of the optional parameters can be present in any given update.", [
   deftype(ChatOwnerLeft, "Describes a service message about the chat owner leaving the chat.", [
     %{
       description:
-        "Optional. The user which will be the new owner of the chat if the previous owner does not return to the chat",
+        "Optional. The user who will become the new owner of the chat if the previous owner does not return to the chat",
       name: :new_owner,
       optional: true,
       type: Telegex.Type.User
@@ -7575,6 +7884,15 @@ At most one of the optional parameters can be present in any given update.", [
     ]
   )
 
+  deftype(SentGuestMessage, "Describes an inline message sent by a guest bot.", [
+    %{
+      description: "Identifier of the sent inline message",
+      name: :inline_message_id,
+      optional: false,
+      type: :string
+    }
+  ])
+
   deftype(
     PreparedInlineMessage,
     "Describes an inline message to be sent by a user of a Mini App.",
@@ -7622,140 +7940,6 @@ At most one of the optional parameters can be present in any given update.", [
       name: :retry_after,
       optional: true,
       type: :integer
-    }
-  ])
-
-  deftype(InputMediaPhoto, "Represents a photo to be sent.", [
-    %{
-      description: "Type of the result, must be photo",
-      name: :type,
-      optional: false,
-      type: :string
-    },
-    %{
-      description:
-        "File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »",
-      name: :media,
-      optional: false,
-      type: :string
-    },
-    %{
-      description:
-        "Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing",
-      name: :caption,
-      optional: true,
-      type: :string
-    },
-    %{
-      description:
-        "Optional. Mode for parsing entities in the photo caption. See formatting options for more details.",
-      name: :parse_mode,
-      optional: true,
-      type: :string
-    },
-    %{
-      description:
-        "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
-      name: :caption_entities,
-      optional: true,
-      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
-    },
-    %{
-      description: "Optional. Pass True, if the caption must be shown above the message media",
-      name: :show_caption_above_media,
-      optional: true,
-      type: :boolean
-    },
-    %{
-      description:
-        "Optional. Pass True if the photo needs to be covered with a spoiler animation",
-      name: :has_spoiler,
-      optional: true,
-      type: :boolean
-    }
-  ])
-
-  deftype(InputMediaVideo, "Represents a video to be sent.", [
-    %{
-      description: "Type of the result, must be video",
-      name: :type,
-      optional: false,
-      type: :string
-    },
-    %{
-      description:
-        "File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »",
-      name: :media,
-      optional: false,
-      type: :string
-    },
-    %{
-      description:
-        "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
-      name: :thumbnail,
-      optional: true,
-      type: :string
-    },
-    %{
-      description:
-        "Optional. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »",
-      name: :cover,
-      optional: true,
-      type: :string
-    },
-    %{
-      description: "Optional. Start timestamp for the video in the message",
-      name: :start_timestamp,
-      optional: true,
-      type: :integer
-    },
-    %{
-      description:
-        "Optional. Caption of the video to be sent, 0-1024 characters after entities parsing",
-      name: :caption,
-      optional: true,
-      type: :string
-    },
-    %{
-      description:
-        "Optional. Mode for parsing entities in the video caption. See formatting options for more details.",
-      name: :parse_mode,
-      optional: true,
-      type: :string
-    },
-    %{
-      description:
-        "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
-      name: :caption_entities,
-      optional: true,
-      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
-    },
-    %{
-      description: "Optional. Pass True, if the caption must be shown above the message media",
-      name: :show_caption_above_media,
-      optional: true,
-      type: :boolean
-    },
-    %{description: "Optional. Video width", name: :width, optional: true, type: :integer},
-    %{description: "Optional. Video height", name: :height, optional: true, type: :integer},
-    %{
-      description: "Optional. Video duration in seconds",
-      name: :duration,
-      optional: true,
-      type: :integer
-    },
-    %{
-      description: "Optional. Pass True if the uploaded video is suitable for streaming",
-      name: :supports_streaming,
-      optional: true,
-      type: :boolean
-    },
-    %{
-      description:
-        "Optional. Pass True if the video needs to be covered with a spoiler animation",
-      name: :has_spoiler,
-      optional: true,
-      type: :boolean
     }
   ])
 
@@ -7936,11 +8120,303 @@ At most one of the optional parameters can be present in any given update.", [
     }
   ])
 
+  deftype(InputMediaLivePhoto, "Represents a live photo to be sent.", [
+    %{
+      description: "Type of the result, must be live_photo",
+      name: :type,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files ». Sending live photos by a URL is currently unsupported.",
+      name: :media,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files ». Sending live photos by a URL is currently unsupported.",
+      name: :photo,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. Caption of the live photo to be sent, 0-1024 characters after entities parsing",
+      name: :caption,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. Mode for parsing entities in the live photo caption. See formatting options for more details.",
+      name: :parse_mode,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
+      name: :caption_entities,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+    },
+    %{
+      description: "Optional. Pass True, if the caption must be shown above the message media",
+      name: :show_caption_above_media,
+      optional: true,
+      type: :boolean
+    },
+    %{
+      description:
+        "Optional. Pass True if the live photo needs to be covered with a spoiler animation",
+      name: :has_spoiler,
+      optional: true,
+      type: :boolean
+    }
+  ])
+
+  deftype(InputMediaLocation, "Represents a location to be sent.", [
+    %{
+      description: "Type of the result, must be location",
+      name: :type,
+      optional: false,
+      type: :string
+    },
+    %{description: "Latitude of the location", name: :latitude, optional: false, type: :float},
+    %{description: "Longitude of the location", name: :longitude, optional: false, type: :float},
+    %{
+      description:
+        "Optional. The radius of uncertainty for the location, measured in meters; 0-1500",
+      name: :horizontal_accuracy,
+      optional: true,
+      type: :float
+    }
+  ])
+
+  deftype(InputMediaPhoto, "Represents a photo to be sent.", [
+    %{
+      description: "Type of the result, must be photo",
+      name: :type,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »",
+      name: :media,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing",
+      name: :caption,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. Mode for parsing entities in the photo caption. See formatting options for more details.",
+      name: :parse_mode,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
+      name: :caption_entities,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+    },
+    %{
+      description: "Optional. Pass True, if the caption must be shown above the message media",
+      name: :show_caption_above_media,
+      optional: true,
+      type: :boolean
+    },
+    %{
+      description:
+        "Optional. Pass True if the photo needs to be covered with a spoiler animation",
+      name: :has_spoiler,
+      optional: true,
+      type: :boolean
+    }
+  ])
+
+  deftype(InputMediaSticker, "Represents a sticker file to be sent.", [
+    %{
+      description: "Type of the result, must be sticker",
+      name: :type,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a .WEBP sticker from the Internet, or pass “attach://<file_attach_name>” to upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data under <file_attach_name> name. More information on Sending Files »",
+      name: :media,
+      optional: false,
+      type: :string
+    },
+    %{
+      description: "Optional. Emoji associated with the sticker; only for just uploaded stickers",
+      name: :emoji,
+      optional: true,
+      type: :string
+    }
+  ])
+
+  deftype(InputMediaVenue, "Represents a venue to be sent.", [
+    %{
+      description: "Type of the result, must be venue",
+      name: :type,
+      optional: false,
+      type: :string
+    },
+    %{description: "Latitude of the location", name: :latitude, optional: false, type: :float},
+    %{description: "Longitude of the location", name: :longitude, optional: false, type: :float},
+    %{description: "Name of the venue", name: :title, optional: false, type: :string},
+    %{description: "Address of the venue", name: :address, optional: false, type: :string},
+    %{
+      description: "Optional. Foursquare identifier of the venue",
+      name: :foursquare_id,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)",
+      name: :foursquare_type,
+      optional: true,
+      type: :string
+    },
+    %{
+      description: "Optional. Google Places identifier of the venue",
+      name: :google_place_id,
+      optional: true,
+      type: :string
+    },
+    %{
+      description: "Optional. Google Places type of the venue. (See supported types.)",
+      name: :google_place_type,
+      optional: true,
+      type: :string
+    }
+  ])
+
+  deftype(InputMediaVideo, "Represents a video to be sent.", [
+    %{
+      description: "Type of the result, must be video",
+      name: :type,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »",
+      name: :media,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
+      name: :thumbnail,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »",
+      name: :cover,
+      optional: true,
+      type: :string
+    },
+    %{
+      description: "Optional. Start timestamp for the video in the message",
+      name: :start_timestamp,
+      optional: true,
+      type: :integer
+    },
+    %{
+      description:
+        "Optional. Caption of the video to be sent, 0-1024 characters after entities parsing",
+      name: :caption,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. Mode for parsing entities in the video caption. See formatting options for more details.",
+      name: :parse_mode,
+      optional: true,
+      type: :string
+    },
+    %{
+      description:
+        "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
+      name: :caption_entities,
+      optional: true,
+      type: %{__struct__: Telegex.TypeDefiner.ArrayType, elem_type: Telegex.Type.MessageEntity}
+    },
+    %{
+      description: "Optional. Pass True, if the caption must be shown above the message media",
+      name: :show_caption_above_media,
+      optional: true,
+      type: :boolean
+    },
+    %{description: "Optional. Video width", name: :width, optional: true, type: :integer},
+    %{description: "Optional. Video height", name: :height, optional: true, type: :integer},
+    %{
+      description: "Optional. Video duration in seconds",
+      name: :duration,
+      optional: true,
+      type: :integer
+    },
+    %{
+      description: "Optional. Pass True if the uploaded video is suitable for streaming",
+      name: :supports_streaming,
+      optional: true,
+      type: :boolean
+    },
+    %{
+      description:
+        "Optional. Pass True if the video needs to be covered with a spoiler animation",
+      name: :has_spoiler,
+      optional: true,
+      type: :boolean
+    }
+  ])
+
   deftype(
     InputFile,
     "This object represents the contents of a file to be uploaded. Must be posted using multipart/form-data in the usual way that files are uploaded via the browser.",
     []
   )
+
+  deftype(InputPaidMediaLivePhoto, "The paid media to send is a live photo.", [
+    %{
+      description: "Type of the media, must be live_photo",
+      name: :type,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files ». Sending live photos by a URL is currently unsupported.",
+      name: :media,
+      optional: false,
+      type: :string
+    },
+    %{
+      description:
+        "The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files ». Sending live photos by a URL is currently unsupported.",
+      name: :photo,
+      optional: false,
+      type: :string
+    }
+  ])
 
   deftype(InputPaidMediaPhoto, "The paid media to send is a photo.", [
     %{

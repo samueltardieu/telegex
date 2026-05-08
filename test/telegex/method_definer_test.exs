@@ -21,4 +21,11 @@ defmodule Telegex.MethodDefinerTest do
 
     assert include_attachment?(type) == true
   end
+
+  test "include_attachment?/1 with Bot API 10.0 types" do
+    # InputMediaLivePhoto (new in 10.0) has attachment fields
+    assert include_attachment?(Telegex.Type.InputMediaLivePhoto) == true
+    # InputPaidMediaLivePhoto (new in 10.0) has attachment fields
+    assert include_attachment?(Telegex.Type.InputPaidMediaLivePhoto) == true
+  end
 end
